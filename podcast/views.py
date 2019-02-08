@@ -1,3 +1,4 @@
 from django.shortcuts import render
 
-# Create your views here.
+def podcasts_list(request):
+    return render(request, 'podcast/podcast_list.html', {})
