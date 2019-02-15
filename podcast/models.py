@@ -5,7 +5,8 @@ from django.utils import timezone
 class Podcast(models.Model):
     pod_title = models.CharField(max_length=200)
     description = models.TextField()
-    podcast = models.FileField(upload_to='podcasts/')
+    audio = models.FileField()
+    picture = models.ImageField(default="static/podcast/img/Screen Shot 2019-02-11 at 6.29.29 PM.png")
 
 
     published_date = models.DateTimeField(
@@ -17,6 +18,7 @@ class Podcast(models.Model):
 
     def __str__(self):
         return self.pod_title
+
 
 
 
