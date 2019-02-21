@@ -15,8 +15,8 @@
         <div class="card text-white">
             <img src="{% static "podcast/img/banner_3.png" %}" class="card-img">
             <div class="card-img-overlay">
-                <form class="form-inline d-flex justify-content-end">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <form method="GET" class="form-inline d-flex justify-content-end" action="">
+                    <input name="q"  value="{{ request.GET.q }}" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
                 </form>
             </div>
@@ -44,4 +44,5 @@
             </div>
         </div>
      {% endfor %}
+        {% include "podcast/pagination.html" %}
 </body>
