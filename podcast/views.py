@@ -1,15 +1,14 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
+from django.http import Http404
 from django.shortcuts import render
 from podcast.models import Podcast
 
 
-
-
 def podcasts_list(request):
-
     podcasts = Podcast.objects.all()
     query = request.GET.get("q")
+
     if query:
         podcasts = Podcast.objects.filter(Q(pod_title__icontains=query) | Q(description__icontains=query))
     paginator = Paginator(podcasts, 4)
@@ -29,8 +28,12 @@ def podcasts_list(request):
     page_range = paginator.page_range[start_index:end_index]
 
 
-
-
     return render(request, 'podcast/podcast_list.html', {"podcasts": podcasts, "page_range": page_range})
 
+def podcast_details(request, podcast_id):
+    specific_podcast = Podcast.objects.filter(id=podcast_id).first()
+    if not specific_podcast:
+        raise Http404
+
+    return render(request, 'podcast/podcast_details.html', {"specific_podcast": specific_podcast})
 

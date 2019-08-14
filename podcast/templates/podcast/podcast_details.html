@@ -13,7 +13,7 @@
 <body>
     <div class="container-fluid">
         <div class="card text-white">
-            <img src="{% static "podcast/img/banner_3.png" %}" class="card-img">
+            <img src="{{ specific_podcast.banner.url }}" class="card-img">
             <div class="card-img-overlay">
                 <form method="GET" class="form-inline d-flex justify-content-end" action="">
                     <input name="q"  value="{{ request.GET.q }}" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -22,28 +22,14 @@
             </div>
         </div>
     </div>
-    {% for podcast in podcasts %}
-        <div class="container pt-5">
-            <div class="card border-0">
-                <div class="row no-gutters">
-                    <div class="col-md-4">
-                        <a href={{ podcast.id }}><img src="{{ podcast.picture.url }}" class="card-img" alt="..."></a>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ podcast.pod_title }}</h5>
-                            <p class="card-text">{{ podcast.description|safe}}</p>
-                            <p class="card-text"><small class="text-muted">Послухати</small></p>
-                            <audio controls preload="none">
-                                <source src="{{ podcast.audio.url}}" type="audio/ogg">
-                                Your browser does not support the audio element.
-                            </audio>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-     {% endfor %}
-     {% include "podcast/pagination.html" %}
-</body>
+    <h5 class="card-title">{{ specific_podcast.pod_title }}</h5>
+    <p class="card-text">{{ specific_podcast.description|safe}}</p>
+    <p class="card-text"><small class="text-muted">Послухати</small></p>
+        <audio controls preload="none">
+            <source src="{{ specific_podcast.audio.url}}" type="audio/ogg">
+            Your browser does not support the audio element.
+        </audio>
+    <p class="card-text">{{ specific_podcast.long_description|safe}}</p>
+
+
 
