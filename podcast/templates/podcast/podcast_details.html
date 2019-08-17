@@ -22,14 +22,41 @@
             </div>
         </div>
     </div>
-    <h5 class="card-title">{{ specific_podcast.pod_title }}</h5>
-    <p class="card-text">{{ specific_podcast.description|safe}}</p>
-    <p class="card-text"><small class="text-muted">Послухати</small></p>
-        <audio controls preload="none">
-            <source src="{{ specific_podcast.audio.url}}" type="audio/ogg">
-            Your browser does not support the audio element.
-        </audio>
-    <p class="card-text">{{ specific_podcast.long_description|safe}}</p>
+    <div class="container pt-3 pb-5">
+        <div class="card-group">
+            <div class="card col-md-8 border-0
+">
+                <h5 class="text-center pt-3">{{ specific_podcast.pod_title }}</h5>
+                <p class="text-center">{{ specific_podcast.description|safe}}</p>
+                <p class="text-center"><small class="text-muted">Послухати</small></p>
+                <audio controls preload="none" class="rounded mx-auto d-block"style="background-color: #95B9C7">
+                    <source src="{{ specific_podcast.audio.url}}" type="audio/ogg">
+                        Your browser does not support the audio element.
+                </audio>
+                <p class="pt-5">{{ specific_podcast.long_description|safe}}</p>
+            </div>
+            <div class="card col-md-4 offset-md-10 border-0">
+                <h5 class="text-center">Послухай інші випуски:</h5>
+                {% for podcast in random_podcasts %}
+                    <div class="card border-primary mb-3">
+                        <div class="card-header text-center">{{ podcast.pod_title }}</div>
+                        <div class="card-body pt-0, pb-0">
+                            <p>{{ podcast.description|safe }}</p>
+                        </div>
+                        <a href={% url 'podcast_details' podcast.id %}><button class="btn btn btn-warning btn-lg btn-block" type="submit">Послухати</button>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+     {% include "podcast/footer.html" %}
+
+
+
+
+
 
 
 
