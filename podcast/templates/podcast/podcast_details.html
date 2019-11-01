@@ -24,8 +24,7 @@
     </div>
     <div class="container pt-3 pb-5">
         <div class="card-group">
-            <div class="card col-md-8 border-0
-">
+            <div class="card col-md-8 border-0">
                 <h5 class="text-center pt-3">{{ specific_podcast.pod_title }}</h5>
                 <p class="text-center">{{ specific_podcast.description|safe}}</p>
                 <p class="text-center"><small class="text-muted">Послухати</small></p>
@@ -49,9 +48,22 @@
                 {% endfor %}
             </div>
         </div>
+        <h5>Comments</h5>
+        <hr>
+        {% for comment in specific_podcast.comments.all %}
+            <div class="card border-light mb-3">
+                <div class="card-header">{{ comment.user }}</div>
+                <div class="card-body">
+                    <p class="card-text">{{ comment.comment_text }}</p>
+                </div>
+            </div>
+        {% empty %}
+            <p></p>
+        {% endfor %}
+        {% include "podcast/create_comment.html" %}
+        </div>
     </div>
-
-     {% include "podcast/footer.html" %}
+        {% include "podcast/footer.html" %}
 
 
 

@@ -1,10 +1,10 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.crypto import random
-
 from podcast.models import Podcast
+from podcast.models import Comment
 
 
 def podcasts_list(request):
@@ -41,18 +41,17 @@ def podcast_details(request, podcast_id):
 
     if query:
         podcasts = Podcast.objects.filter(Q(pod_title__icontains=query) | Q(description__icontains=query))
-    paginator = Paginator(podcasts, 4)
-    page = request.GET.get('page')
-
-    try:
-        podcasts = paginator.page(page)
-    except PageNotAnInteger:
-        podcasts = paginator.page(1)
-    except EmptyPage:
-        podcasts = paginator.page(paginator.num_pages)
-
     if not specific_podcast:
         raise Http404
 
     return render(request, 'podcast/podcast_details.html', {"specific_podcast": specific_podcast, "podcasts": podcasts, "random_podcasts": random_podcasts})
+
+def add_comment_to_podcast(request, podcast_id):
+    podcast = get_object_or_404(Podcast, id=podcast_id)
+    if request.method == "POST":
+        print(request.POST)
+        Comment.objects.create(user=request.POST.get("user"), comment_text=request.POST.get("comment_text"), podcast=podcast)
+
+    return redirect("podcast_details", podcast_id=podcast.id)
+
 
