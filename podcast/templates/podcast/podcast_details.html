@@ -1,24 +1,11 @@
 {%load static %}
-<head>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" type="text/css" media="all" rel="stylesheet" />
-    <link href="{{STATIC_URL}}froala_editor/css/froala_editor.min.css" type="text/css" media="all" rel="stylesheet" />
-    <link href="{{STATIC_URL}}froala_editor/css/froala_style.min.css" type="text/css" media="all" rel="stylesheet" />
-    <script type="text/javascript" src="{{STATIC_URL}}froala_editor/js/froala_editor.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</head>
+{% include "podcast/all_needed_links.html" %}
 <body>
     <div class="container-fluid">
         <div class="card text-white">
             <img src="{{ specific_podcast.banner.url }}" class="card-img">
             <div class="card-img-overlay">
-                <form method="GET" class="form-inline d-flex justify-content-end" action="">
-                    <input name="q"  value="{{ request.GET.q }}" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
-                </form>
+               {% include 'podcast/header.html' %}
             </div>
         </div>
     </div>
@@ -31,8 +18,13 @@
                 <audio controls preload="none" class="rounded mx-auto d-block"style="background-color: #95B9C7">
                     <source src="{{ specific_podcast.audio.url}}" type="audio/ogg">
                         Your browser does not support the audio element.
-                </audio>
-                <p class="pt-5">{{ specific_podcast.long_description|safe}}</p>
+                </audio><br>
+                <div class="d-flex justify-content-center text-dark">
+                    <a class="text-warning" href="{{ specific_podcast.audio.url }}" download >Скачати </a> |
+                    <a class="text-warning" href="https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewPodcast?id=1449473145">Apple Podcasts </a> |
+                    <a class="text-warning" href="https://soundcloud.com/monarch-varvars">SoundCloud</a>
+                </div>
+                 <p class="pt-5">{{ specific_podcast.long_description|safe}}</p>
             </div>
             <div class="card col-md-4 offset-md-10 border-0">
                 <h5 class="text-center">Послухай інші випуски:</h5>
@@ -60,7 +52,7 @@
         {% empty %}
             <p></p>
         {% endfor %}
-        {% include "podcast/create_comment.html" %}
+    {% include "podcast/create_comment.html" %}
         </div>
     </div>
         {% include "podcast/footer.html" %}
